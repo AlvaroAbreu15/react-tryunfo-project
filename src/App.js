@@ -12,12 +12,38 @@ class App extends React.Component {
     cardImage: '',
     cardRare: 'normal',
     cardTrunfo: '',
+    isSaveButtonDisabled: true,
   };
 
   onInputChange = (event) => {
     const { name, value } = event.target;
     this.setState({
       [name]: value,
+    }, () => {
+      const {
+        cardName,
+        cardDescription,
+        cardAttr1,
+        cardAttr2,
+        cardAttr3,
+        cardImage,
+        cardRare,
+      } = this.state;
+      const inputEmpty = (cardName
+        .length > 0) && (cardDescription
+        .length > 0) && (cardImage.length > 0) && (cardRare.length > 0);
+      const att1 = parseInt(cardAttr1, 10);
+      const att2 = parseInt(cardAttr2, 10);
+      const att3 = parseInt(cardAttr3, 10);
+      const number = 210;
+      const maxNumber = 90;
+      const greatValue = (att1 <= maxNumber && att1 >= 0) && (att2 <= maxNumber
+        && att2 >= 0) && (att3 <= maxNumber && att3 >= 0);
+      const sumValue = att1 + att2 + att3 <= number;
+      const bool = (inputEmpty && greatValue && sumValue);
+      this.setState({
+        isSaveButtonDisabled: !bool,
+      });
     });
   };
 
@@ -31,6 +57,7 @@ class App extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
+      isSaveButtonDisabled,
     } = this.state;
     return (
       <div>
@@ -45,6 +72,7 @@ class App extends React.Component {
           cardRare={ cardRare }
           cardTrunfo={ cardTrunfo }
           onInputChange={ this.onInputChange }
+          isSaveButtonDisabled={ isSaveButtonDisabled }
         />
         <Card
           onInputChange={ this.onInputChange }

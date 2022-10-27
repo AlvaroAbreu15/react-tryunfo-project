@@ -17,7 +17,7 @@ class Card extends Component {
     let paragrafo;
 
     if (cardTrunfo === 'on' || cardTrunfo === true) {
-      paragrafo = <h3 data-testid="trunfo-card">Super Trunfo</h3>;
+      paragrafo = <p data-testid="trunfo-card">Super Trunfo</p>;
     } else {
       paragrafo = <p> </p>;
     }

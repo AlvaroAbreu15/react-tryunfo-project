@@ -42,6 +42,8 @@ class Form extends Component {
           <label htmlFor="attr1-input">
             Atributo 1
             <input
+              min={ 0 }
+              max={ 90 }
               type="number"
               data-testid="attr1-input"
               name="cardAttr1"
@@ -52,6 +54,8 @@ class Form extends Component {
           <label htmlFor="attr2-input">
             Atributo 2
             <input
+              min={ 0 }
+              max={ 90 }
               type="number"
               data-testid="attr2-input"
               name="cardAttr2"
@@ -62,6 +66,8 @@ class Form extends Component {
           <label htmlFor="attr3-input">
             Atributo 3
             <input
+              min={ 0 }
+              maxLength={ 90 }
               type="number"
               data-testid="attr3-input"
               name="cardAttr3"
@@ -105,7 +111,9 @@ class Form extends Component {
           <button
             type="button"
             data-testid="save-button"
+            name="isSaveButtonDisabled"
             disabled={ isSaveButtonDisabled }
+            // disabled={ `${isSaveButtonDisabled}` }
             onClick={ onSaveButtonClick }
           >
             Salvar
@@ -117,9 +125,9 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  cardAttr1: PropTypes.string.isRequired,
-  cardAttr2: PropTypes.string.isRequired,
-  cardAttr3: PropTypes.string.isRequired,
+  cardAttr1: PropTypes.number.isRequired,
+  cardAttr2: PropTypes.number.isRequired,
+  cardAttr3: PropTypes.number.isRequired,
   cardDescription: PropTypes.string.isRequired,
   cardImage: PropTypes.string.isRequired,
   cardName: PropTypes.string.isRequired,
