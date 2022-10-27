@@ -27,14 +27,14 @@ class Form extends Component {
               value={ cardName }
               onChange={ onInputChange }
               data-testid="name-input"
-              name="nameCard"
+              name="cardName"
             />
           </label>
           <label htmlFor="description-input">
             Descrição
             <textarea
               data-testid="description-input"
-              name="description"
+              name="cardDescription"
               value={ cardDescription }
               onChange={ onInputChange }
             />
@@ -44,7 +44,7 @@ class Form extends Component {
             <input
               type="number"
               data-testid="attr1-input"
-              name="attribute1"
+              name="cardAttr1"
               value={ cardAttr1 }
               onChange={ onInputChange }
             />
@@ -54,7 +54,7 @@ class Form extends Component {
             <input
               type="number"
               data-testid="attr2-input"
-              name="attribute2"
+              name="cardAttr2"
               value={ cardAttr2 }
               onChange={ onInputChange }
             />
@@ -64,7 +64,7 @@ class Form extends Component {
             <input
               type="number"
               data-testid="attr3-input"
-              name="attribute3"
+              name="cardAttr3"
               value={ cardAttr3 }
               onChange={ onInputChange }
             />
@@ -74,7 +74,7 @@ class Form extends Component {
             <input
               type="text"
               data-testid="image-input"
-              name="image"
+              name="cardImage"
               value={ cardImage }
               onChange={ onInputChange }
             />
@@ -82,7 +82,7 @@ class Form extends Component {
           <label htmlFor="rare-input">
             Selecione a raridade
             <select
-              name="selectRarity"
+              name="cardRare"
               value={ cardRare }
               onChange={ onInputChange }
               data-testid="rare-input"
@@ -95,6 +95,7 @@ class Form extends Component {
           <label htmlFor="trunfo-input">
             É Super Tryunfo
             <input
+              name="cardTrunfo"
               type="checkbox"
               data-testid="trunfo-input"
               checked={ cardTrunfo }

@@ -16,13 +16,13 @@ class Card extends Component {
 
     let paragrafo;
 
-    if (cardTrunfo === true) {
+    if (cardTrunfo === 'on' || cardTrunfo === true) {
       paragrafo = <h3 data-testid="trunfo-card">Super Trunfo</h3>;
     } else {
       paragrafo = <p> </p>;
     }
     return (
-      <div>
+      <div className="div-card">
         <h3 data-testid="name-card">{ cardName }</h3>
         <img src={ cardImage } alt={ cardName } data-testid="image-card" />
         <h4 data-testid="description-card">{ cardDescription }</h4>
@@ -37,9 +37,9 @@ class Card extends Component {
 }
 
 Card.propTypes = {
-  cardAttr1: PropTypes.string.isRequired,
-  cardAttr2: PropTypes.string.isRequired,
-  cardAttr3: PropTypes.string.isRequired,
+  cardAttr1: PropTypes.number.isRequired,
+  cardAttr2: PropTypes.number.isRequired,
+  cardAttr3: PropTypes.number.isRequired,
   cardDescription: PropTypes.string.isRequired,
   cardImage: PropTypes.string.isRequired,
   cardName: PropTypes.string.isRequired,
