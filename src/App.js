@@ -32,6 +32,7 @@ class App extends React.Component {
         cardAttr3,
         cardImage,
         cardRare,
+        hasTrunfo,
       } = this.state;
       console.log(this.state);
       const inputEmpty = (cardName
@@ -46,8 +47,10 @@ class App extends React.Component {
         && att2 >= 0) && (att3 <= maxNumber && att3 >= 0);
       const sumValue = att1 + att2 + att3 <= number;
       const bool = (inputEmpty && greatValue && sumValue);
+      const vdc = hasTrunfo;
       this.setState({
         isSaveButtonDisabled: !bool,
+        hasTrunfo: vdc,
       });
     });
   };
