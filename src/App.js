@@ -14,7 +14,6 @@ class App extends React.Component {
     cardTrunfo: false,
     isSaveButtonDisabled: true,
     hasTrunfo: false,
-    data: [],
   };
 
   onInputChange = (event) => {
@@ -70,11 +69,7 @@ class App extends React.Component {
       cardRare: 'normal',
       isSaveButtonDisabled: false,
     });
-    console.log(cardTrunfo);
-    console.log(hasTrunfo);
-
     const combinada = (cardTrunfo === true && hasTrunfo === false);
-
     if (combinada || !combinada) {
       this.setState({
         cardTrunfo: false,
@@ -86,6 +81,8 @@ class App extends React.Component {
         hasTrunfo: false,
       });
     }
+    console.log(cardTrunfo);
+    console.log(hasTrunfo);
   };
 
   render() {
@@ -98,6 +95,7 @@ class App extends React.Component {
       cardImage,
       cardRare,
       cardTrunfo,
+      hasTrunfo,
       isSaveButtonDisabled,
     } = this.state;
     return (
@@ -115,7 +113,7 @@ class App extends React.Component {
           onInputChange={ this.onInputChange }
           isSaveButtonDisabled={ isSaveButtonDisabled }
           onSaveButtonClick={ this.onSaveButtonClick }
-          hasTrunfo={ this.hasTrunfo }
+          hasTrunfo={ hasTrunfo }
         />
         <Card
           onInputChange={ this.onInputChange }
