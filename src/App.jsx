@@ -109,6 +109,15 @@ class App extends React.Component {
     });
   };
 
+  deleteItem = (event) => {
+    event.target.parentNode.firstChild.remove();
+    event.target.remove();
+    // const { hasTrunfo } = this.state;
+    this.setState({
+      hasTrunfo: false,
+    });
+  };
+
   render() {
     const {
       cardName,
@@ -158,17 +167,26 @@ class App extends React.Component {
         <div>
           <p>Cards Salvos</p>
           { cards.map((e) => (
-            <Card
-              cardName={ e.cardName }
-              cardDescription={ e.cardDescription }
-              key={ e.cardName }
-              cardAttr1={ e.cardAttr1 }
-              cardAttr2={ e.cardAttr2 }
-              cardAttr3={ e.cardAttr3 }
-              cardImage={ cardImage }
-              cardRare={ e.cardRare }
-              cardTrunfo={ e.cardTrunfo }
-            />
+            <div key={ e.name }>
+              <Card
+                cardName={ e.cardName }
+                cardDescription={ e.cardDescription }
+                key={ e.cardName }
+                cardAttr1={ e.cardAttr1 }
+                cardAttr2={ e.cardAttr2 }
+                cardAttr3={ e.cardAttr3 }
+                cardImage={ cardImage }
+                cardRare={ e.cardRare }
+                cardTrunfo={ e.cardTrunfo }
+              />
+              <button
+                type="button"
+                data-testid="delete-button"
+                onClick={ this.deleteItem }
+              >
+                Excluir
+              </button>
+            </div>
           )) }
         </div>
       </main>
