@@ -15,6 +15,7 @@ class App extends React.Component {
     isSaveButtonDisabled: true,
     hasTrunfo: false,
     cards: [],
+    value: '',
   };
 
   onInputChange = (event) => {
@@ -118,6 +119,20 @@ class App extends React.Component {
     });
   };
 
+  filterCards = () => {
+    const { value, cards } = this.state;
+    const newCardList = cards.filter((card) => card
+      .cardName.toLowerCase().includes(value.toLocaleLowerCase()));
+
+    this.setState({
+      cards: newCardList,
+    });
+  };
+
+  changeValueFilter = (event) => {
+    this.setState({ value: event.target.value }, () => this.filterCards());
+  };
+
   render() {
     const {
       cardName,
@@ -131,6 +146,7 @@ class App extends React.Component {
       hasTrunfo,
       isSaveButtonDisabled,
       cards,
+      value,
     } = this.state;
     return (
       <main>
@@ -162,6 +178,12 @@ class App extends React.Component {
             cardImage={ cardImage }
             cardRare={ cardRare }
             cardTrunfo={ cardTrunfo }
+          />
+          <input
+            type="text"
+            value={ value }
+            onChange={ this.changeValueFilter }
+            data-testid="name-filter"
           />
         </div>
         <div>
