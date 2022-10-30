@@ -1,7 +1,7 @@
-/* eslint-disable max-lines */
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
+import Buttons from './components/Buttons';
 
 class App extends React.Component {
   state = {
@@ -148,9 +148,9 @@ class App extends React.Component {
       this.setState({ value: event.target.value }, () => this.filterCards());
     } else if (type === 'select-one') {
       const valueOf = event.target.value;
-      console.log(event.target.type);
+      console.log(valueOf);
       if (valueOf !== 'todas') {
-        return this.setState({ value: event.target.value }, () => this.filterByRarity());
+        this.setState({ value: event.target.value }, () => this.filterByRarity());
       }
     } else {
       const { hasTrunfo } = this.state;
@@ -210,35 +210,16 @@ class App extends React.Component {
             cardRare={ cardRare }
             cardTrunfo={ cardTrunfo }
           />
-          <input
-            type="text"
+          <Buttons
             value={ value }
-            onChange={ this.changeValueFilter }
-            data-testid="name-filter"
-            disabled={ disabledTrunfo }
-          />
-          <select
-            name="filterRarity"
-            onChange={ this.changeValueFilter }
-            data-testid="rare-filter"
-            disabled={ disabledTrunfo }
-            type="select"
-          >
-            <option value="todas">todas</option>
-            <option value="normal">normal</option>
-            <option value="raro">raro</option>
-            <option value="muito raro">muito raro</option>
-          </select>
-          <input
-            type="checkbox"
-            data-testid="trunfo-filter"
-            onChange={ this.changeValueFilter }
+            changeValueFilter={ this.changeValueFilter }
+            disabledTrunfo={ disabledTrunfo }
           />
         </div>
         <div>
           <p>Cards Salvos</p>
           { cards.map((e) => (
-            <div key={ e.name }>
+            <div key={ e.cardName }>
               <Card
                 cardName={ e.cardName }
                 cardDescription={ e.cardDescription }
