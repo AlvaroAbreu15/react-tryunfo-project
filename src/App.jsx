@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React from 'react';
 import Form from './components/Form';
 import Card from './components/Card';
@@ -36,8 +37,7 @@ class App extends React.Component {
         cardRare,
         hasTrunfo,
       } = this.state;
-      const inputEmpty = (cardName
-        .length > 0) && (cardDescription
+      const inputEmpty = (cardName.length > 0) && (cardDescription
         .length > 0) && (cardImage.length > 0) && (cardRare.length > 0);
       const att1 = parseInt(cardAttr1, 10);
       const att2 = parseInt(cardAttr2, 10);
@@ -67,7 +67,6 @@ class App extends React.Component {
       cardAttr3,
       cardImage,
       cardRare,
-      disabledTrunfo,
     } = this.state;
     this.setState((prevState) => ({
       cards: [...prevState.cards, {
@@ -119,30 +118,18 @@ class App extends React.Component {
     const { value, cards } = this.state;
     const newCardList = cards.filter((card) => card
       .cardName.toLowerCase().includes(value.toLowerCase()));
-
     this.setState({
       cards: newCardList,
     });
-  };
-
-  changeValueFilter = (event) => {
-    this.setState({ value: event.target.value }, () => this.filterCards());
   };
 
   filterByRarity = () => {
     const { value, cards } = this.state;
     const newCardList = cards.filter((card) => card
-      .cardRare.toLowerCase().includes(value.toLowerCase()));
-
+      .cardRare.toLowerCase() === value.toLowerCase());
     this.setState({
       cards: newCardList,
     });
-  };
-
-  changeValueSelected = (event) => {
-    if (event.target.value !== 'todas') {
-      return this.setState({ value: event.target.value }, () => this.filterByRarity());
-    }
   };
 
   filterByTrunfo = () => {
@@ -150,22 +137,30 @@ class App extends React.Component {
     console.log(cards);
     const newCardList = cards.filter((card) => card
       .cardTrunfo === true);
-
     this.setState({
       cards: newCardList,
-
     });
   };
 
-  changeSuperTrunfo = (event) => {
-    const { hasTrunfo } = this.state;
-    if (hasTrunfo === true) {
-      this.setState({ value: event.target.value }, () => this.filterByTrunfo());
+  changeValueFilter = (event) => {
+    const { type } = event.target;
+    if (type === 'text') {
+      this.setState({ value: event.target.value }, () => this.filterCards());
+    } else if (type === 'select-one') {
+      const valueOf = event.target.value;
+      console.log(event.target.type);
+      if (valueOf !== 'todas') {
+        return this.setState({ value: event.target.value }, () => this.filterByRarity());
+      }
+    } else {
+      const { hasTrunfo } = this.state;
+      if (hasTrunfo === true) {
+        this.setState({ value: event.target.value }, () => this.filterByTrunfo());
+      }
+      this.setState({
+        disabledTrunfo: true,
+      });
     }
-
-    this.setState({
-      disabledTrunfo: true,
-    });
   };
 
   render() {
@@ -224,9 +219,10 @@ class App extends React.Component {
           />
           <select
             name="filterRarity"
-            onChange={ this.changeValueSelected }
+            onChange={ this.changeValueFilter }
             data-testid="rare-filter"
             disabled={ disabledTrunfo }
+            type="select"
           >
             <option value="todas">todas</option>
             <option value="normal">normal</option>
@@ -236,7 +232,7 @@ class App extends React.Component {
           <input
             type="checkbox"
             data-testid="trunfo-filter"
-            onChange={ this.changeSuperTrunfo }
+            onChange={ this.changeValueFilter }
           />
         </div>
         <div>
@@ -270,4 +266,3 @@ class App extends React.Component {
 }
 
 export default App;
-   
