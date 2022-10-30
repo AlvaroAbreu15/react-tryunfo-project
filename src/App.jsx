@@ -16,14 +16,13 @@ class App extends React.Component {
     hasTrunfo: false,
     cards: [],
     value: '',
+    disabledTrunfo: false,
   };
 
   onInputChange = (event) => {
     const { name } = event.target;
     const value = event.target.type === 'checkbox' ? event
       .target.checked : event.target.value;
-    // cards.push(`${[name]}: ${value}`);
-    // cards.push(...this.state);
     this.setState({
       [name]: value,
     }, () => {
@@ -37,7 +36,6 @@ class App extends React.Component {
         cardRare,
         hasTrunfo,
       } = this.state;
-      // console.log(this.state);
       const inputEmpty = (cardName
         .length > 0) && (cardDescription
         .length > 0) && (cardImage.length > 0) && (cardRare.length > 0);
@@ -69,6 +67,7 @@ class App extends React.Component {
       cardAttr3,
       cardImage,
       cardRare,
+      disabledTrunfo,
     } = this.state;
     this.setState((prevState) => ({
       cards: [...prevState.cards, {
@@ -82,9 +81,6 @@ class App extends React.Component {
         cardTrunfo,
       }],
     }), () => {
-      console.log(cardTrunfo);
-      console.log(hasTrunfo);
-      // console.log(cards);
       this.setState({
         cardName: '',
         cardDescription: '',
@@ -94,6 +90,7 @@ class App extends React.Component {
         cardImage: '',
         cardRare: 'normal',
         isSaveButtonDisabled: false,
+        disabledTrunfo: false,
       });
       const combinada = (cardTrunfo === true && hasTrunfo === false);
       if (combinada || !combinada) {
@@ -113,7 +110,6 @@ class App extends React.Component {
   deleteItem = (event) => {
     event.target.parentNode.firstChild.remove();
     event.target.remove();
-    // const { hasTrunfo } = this.state;
     this.setState({
       hasTrunfo: false,
     });
@@ -122,7 +118,7 @@ class App extends React.Component {
   filterCards = () => {
     const { value, cards } = this.state;
     const newCardList = cards.filter((card) => card
-      .cardName.toLowerCase().includes(value.toLocaleLowerCase()));
+      .cardName.toLowerCase().includes(value.toLowerCase()));
 
     this.setState({
       cards: newCardList,
@@ -131,6 +127,45 @@ class App extends React.Component {
 
   changeValueFilter = (event) => {
     this.setState({ value: event.target.value }, () => this.filterCards());
+  };
+
+  filterByRarity = () => {
+    const { value, cards } = this.state;
+    const newCardList = cards.filter((card) => card
+      .cardRare.toLowerCase().includes(value.toLowerCase()));
+
+    this.setState({
+      cards: newCardList,
+    });
+  };
+
+  changeValueSelected = (event) => {
+    if (event.target.value !== 'todas') {
+      return this.setState({ value: event.target.value }, () => this.filterByRarity());
+    }
+  };
+
+  filterByTrunfo = () => {
+    const { cards } = this.state;
+    console.log(cards);
+    const newCardList = cards.filter((card) => card
+      .cardTrunfo === true);
+
+    this.setState({
+      cards: newCardList,
+
+    });
+  };
+
+  changeSuperTrunfo = (event) => {
+    const { hasTrunfo } = this.state;
+    if (hasTrunfo === true) {
+      this.setState({ value: event.target.value }, () => this.filterByTrunfo());
+    }
+
+    this.setState({
+      disabledTrunfo: true,
+    });
   };
 
   render() {
@@ -147,6 +182,7 @@ class App extends React.Component {
       isSaveButtonDisabled,
       cards,
       value,
+      disabledTrunfo,
     } = this.state;
     return (
       <main>
@@ -184,6 +220,23 @@ class App extends React.Component {
             value={ value }
             onChange={ this.changeValueFilter }
             data-testid="name-filter"
+            disabled={ disabledTrunfo }
+          />
+          <select
+            name="filterRarity"
+            onChange={ this.changeValueSelected }
+            data-testid="rare-filter"
+            disabled={ disabledTrunfo }
+          >
+            <option value="todas">todas</option>
+            <option value="normal">normal</option>
+            <option value="raro">raro</option>
+            <option value="muito raro">muito raro</option>
+          </select>
+          <input
+            type="checkbox"
+            data-testid="trunfo-filter"
+            onChange={ this.changeSuperTrunfo }
           />
         </div>
         <div>
@@ -217,3 +270,4 @@ class App extends React.Component {
 }
 
 export default App;
+   
